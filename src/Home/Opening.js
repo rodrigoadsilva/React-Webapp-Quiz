@@ -11,14 +11,15 @@ const Opening = props => {
                     </Segment>
                     <Header as='h2'>
                         A game of questions and answers.
-                        </Header>
+                    </Header>
                     <p>
-                        Challenge your friends on this awesome quiz-game. Just share with them and let the fun go.
-                        </p>
+                        Challenge your friends on this awesome game. Just share with them and let the fun go.
+                    </p>
+                    <br/>
                     <Card fluid>
                         <Card.Content>
                             Join now
-                            </Card.Content>
+                        </Card.Content>
                         <Card.Content>
                             <Button color='blue'>Login with Facebook</Button>
                             <Button color='green'>Administrative Area</Button>
