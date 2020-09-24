@@ -1,6 +1,7 @@
 # Udemy course - React Webapp Quiz
 
-A quiz-game web application made using React. Part of the course React for beginners tought by Professor Reginaldo on the Udemy platform.<br>
+A quiz-game web application made using React Components and Semantic UI framework to layout.<br>
+Is a part of the course React for beginners tought by Professor Reginaldo on the Udemy platform.<br>
 See more info on [Do Zero ao React para iniciantes - Udemy](https://www.udemy.com/course/xumes-react-criando-site-para-empresa).
 
 This application was developed using [Node.js](https://nodejs.org/) v12+ and [Yarn](https://yarnpkg.com/) v1.22 +, so make sure you have these versions installed.
