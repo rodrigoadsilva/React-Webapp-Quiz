@@ -1,14 +1,19 @@
 import React from 'react';
+import {Container} from 'semantic-ui-react'
 
 import './App.css'
 
 //import Opening from './Home/Opening'
-import Categorys from './Game/Category'
+//import Categorys from './Game/Categorys'
+//import Questions from './Game/Questions'
+import Result from './Game/Result'
 
 function App() {
   return (
     <div className='h-100'>
-      <Categorys/>
+      <Container>
+        <Result/>
+      </Container>
     </div>
   );
 }
