@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import {Grid} from 'semantic-ui-react'
 
+import Navbar from './Navbar'
 import Category from './Category'
 
 class Categorys extends Component {
     render(){
         return(
             <>
+                <Navbar/>
                 <Grid container verticalAlign='middle' textAlign='center' columns={1}>
                     <Grid.Row>
                         <Grid.Column>

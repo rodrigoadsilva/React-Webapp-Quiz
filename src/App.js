@@ -1,21 +1,27 @@
 import React from 'react';
 import {Container} from 'semantic-ui-react'
-
+import {BrowserRouter, Route} from 'react-router-dom'
 import './App.css'
 
-//import Opening from './Home/Opening'
-//import Categorys from './Game/Categorys'
-//import Questions from './Game/Questions'
-//import Results from './Game/Results'
+import Launch from './Home/Launch'
+import Categorys from './Game/Categorys'
+import Results from './Game/Results'
 import Ranking from './Game/Ranking'
+import Questions from './Game/Questions'
 
 function App() {
   return (
-    <div className='h-100'>
-      <Container className='h-100'>
-        <Ranking/>
-      </Container>
-    </div>
+    <BrowserRouter>
+      <div className='h-100'>
+        <Container className='h-100'>
+          <Route path='/' exact component={Launch}/>
+          <Route path='/categorys' component={Categorys}/>
+          <Route path='/questions' component={Questions}/>
+          <Route path='/result' component={Results}/>
+          <Route path='/ranking' component={Ranking}/>
+        </Container>
+      </div>
+    </BrowserRouter>
   );
 }
 

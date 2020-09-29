@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
-import { Grid, List } from 'semantic-ui-react'
+import { Grid, List} from 'semantic-ui-react'
+
+import Navbar from './Navbar'
+import Player from './Player'
 
 class Ranking extends Component {
     render() {
         return (
+            <>
+            <Navbar/>
             <Grid padded>
                 <Grid.Row color={'orange'}>
                     <Grid.Column textAlign='center'>
@@ -11,24 +16,16 @@ class Ranking extends Component {
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row centered>
-                    <Grid.Column width={6}>
+                    <Grid.Column width={8}>
                         <List divided>
-                            <List.Item>
-                                <p>Blabla</p>
-                            </List.Item>
-                            <List.Item>
-                                <p>Bleble</p>
-                            </List.Item>
-                            <List.Item>
-                                <p>Bloblo</p>
-                            </List.Item>
-                            <List.Item>
-                                <p>Blibli</p>
-                            </List.Item>
+                            <Player playerImage='' playerName='FooBla' playerPoints='400'/>
+                            <Player playerImage='' playerName='BleBla' playerPoints='250'/>
+                            <Player playerImage='' playerName='TooBla' playerPoints='10'/>
                         </List>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
+            </>
         )
     }
 }

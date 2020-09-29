@@ -1,10 +1,12 @@
 import React from 'react'
-
 import {Grid, Radio, Button, Message} from 'semantic-ui-react'
+
+import Navbar from './Navbar'
 
 const Questions = props => {
     return(
         <div>
+            <Navbar/>
             <Grid columns={2} textAlign='center'>
                 <Grid.Row>
                     <h1>Questions about {props.categoryQuestion}</h1>
