@@ -16,9 +16,16 @@ class Launch extends Component {
         auth.onAuthStateChanged((user) => {
             if(user){
                 console.log(user)
+                this.setState({
+                    user,
+                    isLogged: true
+                })
             }
             else{
                 console.log('Can`t login')
+                this.setState({
+                    isLogged: false
+                })
             }
         })
     }
@@ -45,15 +52,25 @@ class Launch extends Component {
                             Challenge your friends on this awesome game. Just share with them and let the fun go.
                         </p>
                         <br/>
-                        <Card fluid>
-                            <Card.Content>
-                                Join now
-                            </Card.Content>
-                            <Card.Content>
-                                <Button color='facebook' onClick={()=> this.authenticate('facebook')}>Login with Facebook</Button>
-                                <Button color='twitter'>Login with Twitter</Button>
-                            </Card.Content>
-                        </Card>
+                        {
+                            !this.state.isLogged &&
+                            <Card fluid>
+                                <Card.Content>
+                                    Join now
+                                </Card.Content>
+                                <Card.Content>
+                                    <Button color='facebook' onClick={()=> this.authenticate('facebook')}>Login with Facebook</Button>
+                                    <Button color='twitter'>Login with Twitter</Button>
+                                </Card.Content>
+                            </Card>
+                        }
+                        {
+                            this.state.isLogged &&
+                            <>
+                                <h3>{this.state.user.displayName}</h3>
+                                <img src={this.state.user.photoURL}/>
+                            </>
+                        }
                     </GridColumn>
                 </GridRow>
             </Grid>
