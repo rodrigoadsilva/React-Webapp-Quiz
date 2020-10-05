@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { Grid, Header, Segment, Card, Button, GridRow, GridColumn } from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom'
 
-import config, {auth, providers} from './../config'
+import {auth, providers} from './../config'
 import Navbar from './Navbar'
 
 class Launch extends Component {
@@ -11,18 +12,19 @@ class Launch extends Component {
         this.state = {
             user: {},
             isLogged: false
-        }
+        } 
+    }
 
+    componentDidMount(){
         auth.onAuthStateChanged((user) => {
             if(user){
-                console.log(user)
                 this.setState({
-                    user,
+                    user: user,
                     isLogged: true
                 })
             }
             else{
-                console.log('Can`t login')
+                console.log('User dont logged')
                 this.setState({
                     isLogged: false
                 })
@@ -31,11 +33,14 @@ class Launch extends Component {
     }
 
     authenticate(provider){
-        console.log(provider)
+        console.log("Logging in with "+provider)
         auth.signInWithPopup(providers[provider])
     }
 
     render(){
+        if(this.state.isLogged){
+            return <Redirect to="/categorys"/>
+        }
         return (
             <>
             <Navbar/>
@@ -68,7 +73,7 @@ class Launch extends Component {
                             this.state.isLogged &&
                             <>
                                 <h3>{this.state.user.displayName}</h3>
-                                <img src={this.state.user.photoURL}/>
+                                <img src={this.state.user.photoURL} alt={this.user.displayName + '_picture'}/>
                             </>
                         }
                     </GridColumn>

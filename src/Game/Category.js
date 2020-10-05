@@ -4,7 +4,9 @@ import { Grid, Segment, Header, Icon } from 'semantic-ui-react'
 
 const size = {
     width: 175,
-    height: 100
+    height: 100,
+    display: "flex",
+    justifyContent: "center"
 }
 
 const Category = props => {
@@ -12,10 +14,10 @@ const Category = props => {
         <Grid.Column>
             <Segment circular style={size}>
                 <Header as='h2'>
+                    <Icon name={props.icon} />
                     <Header.Subheader>
-                        <Icon name={props.icon} />
+                        {props.title}
                     </Header.Subheader>
-                    {props.title}
                 </Header>
             </Segment>
         </Grid.Column>
