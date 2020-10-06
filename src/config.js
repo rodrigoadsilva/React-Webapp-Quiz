@@ -16,6 +16,7 @@ const config = Rebase.createClass(db)
 
 export const providers = {
     'facebook': new firebase.auth.FacebookAuthProvider(),
+    'twitter': new firebase.auth.TwitterAuthProvider(),
 }
 
 export const auth = firebaseInfo.auth()

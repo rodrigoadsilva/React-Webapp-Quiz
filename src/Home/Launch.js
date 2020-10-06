@@ -65,7 +65,7 @@ class Launch extends Component {
                                 </Card.Content>
                                 <Card.Content>
                                     <Button color='facebook' onClick={()=> this.authenticate('facebook')}>Login with Facebook</Button>
-                                    <Button color='twitter'>Login with Twitter</Button>
+                                    <Button color='twitter' onClick={()=> this.authenticate('twitter')}>Login with Twitter</Button>
                                 </Card.Content>
                             </Card>
                         }
