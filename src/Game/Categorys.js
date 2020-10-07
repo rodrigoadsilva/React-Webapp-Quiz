@@ -1,15 +1,31 @@
 import React, { Component } from 'react'
 import { Grid } from 'semantic-ui-react'
 
+import config from '../config'
 import Navbar from './Navbar'
 import Category from './Category'
 
-const columnCenterContent = {
-    display: "flex",
-    justifyContent: "center"
-}
-
 class Categorys extends Component {
+    constructor(props){
+        super(props)
+
+        this.state = {
+            categorys: {}
+        }
+
+        
+
+    }
+
+    componentDidMount() {
+        config.syncState('categorys', {
+            context: this,
+            state: 'categorys',
+            asArray: false
+        })
+    }
+    
+
     render() {
         return (
             <>
@@ -22,23 +38,14 @@ class Categorys extends Component {
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row columns={3}>
-                        <Grid.Column color={'yellow'} style={columnCenterContent}>
-                            <Category title='Sports' icon='futbol' />
-                        </Grid.Column>
-                        <Grid.Column color={'blue'} style={columnCenterContent}>
-                            <Category title='Music' icon='music' />
-                        </Grid.Column>
-                        <Grid.Column color={'red'} style={columnCenterContent}>
-                            <Category title='World' icon='globe' />
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row columns={2}>
-                        <Grid.Column style={columnCenterContent}>
-                            <Category title='Animals' icon='paw' />
-                        </Grid.Column>
-                        <Grid.Column style={columnCenterContent}>
-                            <Category title='Geek' icon='hand spock outline' />
-                        </Grid.Column>
+                        {
+                            Object.keys(this.state.categorys)
+                                .map(key => {
+                                    return (
+                                        <Category key={key} title={this.state.categorys[key].name} icon={this.state.categorys[key].icon} />
+                                    )
+                                })
+                        }
                     </Grid.Row>
                 </Grid>
             </>

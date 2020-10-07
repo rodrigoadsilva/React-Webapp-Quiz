@@ -11,7 +11,7 @@ const size = {
 
 const Category = props => {
     return (
-        <Grid.Column>
+        <Grid.Column style={{display: "flex", justifyContent: "center", paddingBottom: "20px"}}>
             <Segment circular style={size}>
                 <Header as='h2'>
                     <Icon name={props.icon} />

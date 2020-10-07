@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { Menu, Image, Dropdown } from 'semantic-ui-react'
 import firebase from 'firebase'
 
+import {auth} from './../config'
+
 class Navbar extends Component {
     constructor(props) {
         super(props)
@@ -12,22 +14,35 @@ class Navbar extends Component {
             isLogged: false
         }
 
+        this.logoutUser = this.logoutUser.bind(this)
+
     }
 
     componentDidMount() {
-        const userCurrent = firebase.auth().currentUser
-        console.log(userCurrent)
-        
-        if (userCurrent !== null) {
-            const userLogged = {
-                name: userCurrent.displayName,
-                picture: userCurrent.photoURL
+
+        auth.onAuthStateChanged((user) => {
+            if(user){
+                const userCurrent = firebase.auth().currentUser
+                console.log(userCurrent)
+                
+                if (userCurrent !== null) {
+                    const userLogged = {
+                        name: userCurrent.displayName,
+                        picture: userCurrent.photoURL
+                    }
+                    this.setState({
+                        user: userLogged,
+                        isLogged: true
+                    })
+                }
             }
-            this.setState({
-                user: userLogged,
-                isLogged: true
-            })
-        }
+            else{
+                console.log('User dont logged')
+                this.setState({
+                    isLogged: false
+                })
+            }
+        })
     }
 
     logoutUser() {
