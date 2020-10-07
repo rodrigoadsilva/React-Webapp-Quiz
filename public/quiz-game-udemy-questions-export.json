@@ -1,0 +1,16 @@
+[ null, {
+  "alternatives" : [ null, {
+    "answer" : "Yeh, that is a correct alternative",
+    "correct" : true
+  }, {
+    "answer" : "That too is not a correct",
+    "correct" : false
+  }, {
+    "answer" : "That is not a correct",
+    "correct" : false
+  }, {
+    "answer" : "Oh, one more incorrect alternative",
+    "correct" : false
+  } ],
+  "title" : "A random question that a right answer is the number 1"
+}]

@@ -12,9 +12,6 @@ class Categorys extends Component {
         this.state = {
             categorys: {}
         }
-
-        
-
     }
 
     componentDidMount() {
@@ -25,7 +22,6 @@ class Categorys extends Component {
         })
     }
     
-
     render() {
         return (
             <>
