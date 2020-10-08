@@ -38,7 +38,7 @@ class Categorys extends Component {
                             Object.keys(this.state.categorys)
                                 .map(key => {
                                     return (
-                                        <Category key={key} title={this.state.categorys[key].name} icon={this.state.categorys[key].icon} id={key}/>
+                                        <Category key={key} title={this.state.categorys[key].name} icon={this.state.categorys[key].icon}/>
                                     )
                                 })
                         }

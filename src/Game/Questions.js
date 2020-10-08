@@ -13,12 +13,30 @@ class Questions extends Component {
             isLoading: false
         }
 
-        this.loadingQuestions(this.props.match.params.idCat)
-
     }
 
-    loadingQuestions(idCat){
+    componentDidMount(){
+        this.loadingQuestions(this.props.match.params.nameCat)
+    }
 
+    loadingQuestions(nameCat){
+        this.setState({
+            questions: {},
+            isLoading: true
+        })
+        const url = `https://quiz-game-udemy.firebaseio.com/categorys.json?orderBy="name"&equalTo="${nameCat}"`
+        axios.get(url)
+            .then(data => {
+                const key = Object.keys(data.data)[0]
+                console.log('Data list: ', data.data[key])
+                this.setState({
+                    questions: data.data[key],
+                    isLoading: false
+                })
+            })
+            .catch(err => {
+                console.log('Error: ' + err)
+            })        
     }
 
     render(){
@@ -27,7 +45,7 @@ class Questions extends Component {
                 <Navbar/>
                 <Grid columns={2} textAlign='center'>
                     <Grid.Row>
-                        <h1>Questions about {JSON.stringify(this.props.match.params)}</h1>
+                        <h1>Questions about {this.props.match.params.nameCat}</h1>
                     </Grid.Row>
                     <Grid.Row>
                         <h3>Question 1: Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</h3>

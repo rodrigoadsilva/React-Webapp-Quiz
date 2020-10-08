@@ -13,7 +13,7 @@ const size = {
 const Category = props => {
     return (
         <Grid.Column style={{display: "flex", justifyContent: "center", paddingBottom: "20px"}}>
-            <Link to={`/questions/${props.id}`}>
+            <Link to={`/questions/${props.title}`}>
                 <Segment circular style={size}>
                     <Header as='h2'>
                         <Icon name={props.icon} />

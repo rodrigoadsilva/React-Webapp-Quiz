@@ -16,7 +16,7 @@ function App() {
         <Container className='h-100'>
           <Route path='/' exact component={Launch}/>
           <Route path='/categorys' component={Categorys}/>
-          <Route path='/questions/:idCat' component={Questions}/>
+          <Route path='/questions/:nameCat' component={Questions}/>
           <Route path='/result' component={Results}/>
           <Route path='/ranking' component={Ranking}/>
         </Container>
