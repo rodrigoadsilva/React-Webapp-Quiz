@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { Grid, Segment, Header, Icon } from 'semantic-ui-react'
 
@@ -12,14 +13,16 @@ const size = {
 const Category = props => {
     return (
         <Grid.Column style={{display: "flex", justifyContent: "center", paddingBottom: "20px"}}>
-            <Segment circular style={size}>
-                <Header as='h2'>
-                    <Icon name={props.icon} />
-                    <Header.Subheader>
-                        {props.title}
-                    </Header.Subheader>
-                </Header>
-            </Segment>
+            <Link to={`/questions/${props.id}`}>
+                <Segment circular style={size}>
+                    <Header as='h2'>
+                        <Icon name={props.icon} />
+                        <Header.Subheader>
+                            {props.title}
+                        </Header.Subheader>
+                    </Header>
+                </Segment>
+            </Link>
         </Grid.Column>
     )
 }
