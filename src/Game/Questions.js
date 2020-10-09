@@ -1,27 +1,27 @@
 import React, { Component } from 'react'
-import {Grid, Radio, Button, Message} from 'semantic-ui-react'
+import { Grid, Radio, Button, Message, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 
 import Navbar from './Navbar'
 
 class Questions extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {
-            questions: {},
+            catQuestions: {},
             isLoading: false
         }
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.loadingQuestions(this.props.match.params.nameCat)
     }
 
-    loadingQuestions(nameCat){
+    loadingQuestions(nameCat) {
         this.setState({
-            questions: {},
+            catQuestions: {},
             isLoading: true
         })
         const url = `https://quiz-game-udemy.firebaseio.com/categorys.json?orderBy="name"&equalTo="${nameCat}"`
@@ -30,56 +30,73 @@ class Questions extends Component {
                 const key = Object.keys(data.data)[0]
                 console.log('Data list: ', data.data[key])
                 this.setState({
-                    questions: data.data[key],
+                    catQuestions: data.data[key],
                     isLoading: false
                 })
             })
             .catch(err => {
                 console.log('Error: ' + err)
-            })        
+            })
     }
 
-    render(){
-        return(
+    renderQuestions(question, key) {
+        return (
+            <Grid container columns={2} textAlign='center' key={key}>
+                <Grid.Row>
+                    <h3>Question: {question.title}.</h3>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column width={5}>
+                        <Message color='yellow'>
+                            <p>1- {question.alternatives[1].answer}</p>
+                            <Radio toggle />
+                        </Message>
+                    </Grid.Column>
+                    <Grid.Column width={5}>
+                        <Message color='teal'>
+                            <p>2- {question.alternatives[2].answer}</p>
+                            <Radio toggle />
+                        </Message>
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column width={5}>
+                        <Message color='pink'>
+                            <p>3- {question.alternatives[3].answer}</p>
+                            <Radio toggle />
+                        </Message>
+                    </Grid.Column>
+                    <Grid.Column width={5}>
+                        <Message color='brown'>
+                            <p>4- {question.alternatives[4].answer}</p>
+                            <Radio toggle />
+                        </Message>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
+        )
+    }
+
+    render() {
+        return (
             <div>
-                <Navbar/>
-                <Grid columns={2} textAlign='center'>
-                    <Grid.Row>
-                        <h1>Questions about {this.props.match.params.nameCat}</h1>
-                    </Grid.Row>
-                    <Grid.Row>
-                        <h3>Question 1: Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</h3>
-                    </Grid.Row>
+                <Navbar />
+                <Grid textAlign='center' style={{margin: "10px"}}>
                     <Grid.Row>
                         <Grid.Column>
-                            <Message color='yellow'>
-                                <p>Alternative 1</p>
-                                <Radio toggle/>
-                            </Message>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <Message color='teal'>
-                                <p>Alternative 2</p>
-                                <Radio toggle/>
-                            </Message>
+                        <h1>Questions about {this.props.match.params.nameCat} <Icon name={this.state.catQuestions.icon} /></h1>
+                        <hr/>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row>
-                        <Grid.Column>
-                            <Message color='pink'>
-                                <p>Alternative 3</p>
-                                <Radio toggle/>
-                            </Message>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <Message color='brown'>
-                                <p>Alternative 4</p>
-                                <Radio toggle/>
-                            </Message>
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Button>Response</Button>
                 </Grid>
+                {
+                    this.state.catQuestions.questions &&
+                    Object.keys(this.state.catQuestions.questions)
+                        .map(key => {
+                            return this.renderQuestions(this.state.catQuestions.questions[key], key)
+                        })
+                }
+                <Button>Response</Button>
             </div>
         )
     }
