@@ -45,28 +45,26 @@ class Questions extends Component {
                 <Grid.Row>
                     <h3>Question: {question.title}.</h3>
                 </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column width={5}>
+                <Grid.Row columns={2}>
+                    <Grid.Column style={{paddingBottom: "5px"}}>
                         <Message color='yellow'>
                             <p>1- {question.alternatives[1].answer}</p>
                             <Radio toggle />
                         </Message>
                     </Grid.Column>
-                    <Grid.Column width={5}>
+                    <Grid.Column style={{paddingBottom: "5px"}}>
                         <Message color='teal'>
                             <p>2- {question.alternatives[2].answer}</p>
                             <Radio toggle />
                         </Message>
                     </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column width={5}>
+                    <Grid.Column>
                         <Message color='pink'>
                             <p>3- {question.alternatives[3].answer}</p>
                             <Radio toggle />
                         </Message>
                     </Grid.Column>
-                    <Grid.Column width={5}>
+                    <Grid.Column>
                         <Message color='brown'>
                             <p>4- {question.alternatives[4].answer}</p>
                             <Radio toggle />
