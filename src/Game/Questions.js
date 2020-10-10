@@ -12,7 +12,6 @@ class Questions extends Component {
             catQuestions: {},
             isLoading: false
         }
-
     }
 
     componentDidMount() {
@@ -94,7 +93,9 @@ class Questions extends Component {
                             return this.renderQuestions(this.state.catQuestions.questions[key], key)
                         })
                 }
-                <Button>Response</Button>
+                <Grid textAlign='center' style={{margin: "20px"}}>
+                    <Button>Response</Button>
+                </Grid>
             </div>
         )
     }
