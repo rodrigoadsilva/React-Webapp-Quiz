@@ -10,7 +10,9 @@ class Questions extends Component {
 
         this.state = {
             catQuestions: {},
-            isLoading: false
+            isLoading: false,
+            currentQuestion: 0,
+            totalQuestions: 0
         }
     }
 
@@ -75,7 +77,14 @@ class Questions extends Component {
     }
 
     render() {
-        return (
+
+        let items = []
+
+        if(this.state.isLoading){
+            return <h2>Loading questions...</h2>
+        }
+        
+        return (   
             <div>
                 <Navbar />
                 <Grid textAlign='center' style={{margin: "10px"}}>
@@ -90,8 +99,13 @@ class Questions extends Component {
                     this.state.catQuestions.questions &&
                     Object.keys(this.state.catQuestions.questions)
                         .map(key => {
-                            return this.renderQuestions(this.state.catQuestions.questions[key], key)
+                            items.push(key)
+                            //return this.renderQuestions(this.state.catQuestions.questions[key], key)
                         })
+                }
+                {
+                    this.state.catQuestions.questions &&
+                    this.renderQuestions(this.state.catQuestions.questions[items[this.state.currentQuestion]], items[0])
                 }
                 <Grid textAlign='center' style={{margin: "20px"}}>
                     <Button>Response</Button>
