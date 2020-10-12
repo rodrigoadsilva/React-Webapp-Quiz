@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Radio, Button, Message, Icon } from 'semantic-ui-react'
+import { Grid, Radio, Button, Message, Icon, Progress } from 'semantic-ui-react'
 import axios from 'axios'
 
 import Navbar from './Navbar'
@@ -107,6 +107,7 @@ class Questions extends Component {
                     this.state.catQuestions.questions &&
                     this.renderQuestions(this.state.catQuestions.questions[items[this.state.currentQuestion]], items[0])
                 }
+                <Progress value={this.state.currentQuestion + 1} total={items.length} progress='ratio' color={'orange'}/>
                 <Grid textAlign='center' style={{margin: "20px"}}>
                     <Button>Response</Button>
                 </Grid>
