@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Radio, Button, Message, Icon, Progress } from 'semantic-ui-react'
 import axios from 'axios'
+import _ from 'lodash'
 
 import Navbar from './Navbar'
 
@@ -14,6 +15,8 @@ class Questions extends Component {
             currentQuestion: 0,
             totalQuestions: 0
         }
+
+        this.nextQuestion = this.nextQuestion.bind(this)
     }
 
     componentDidMount() {
@@ -30,14 +33,28 @@ class Questions extends Component {
             .then(data => {
                 const key = Object.keys(data.data)[0]
                 console.log('Data list: ', data.data[key])
+                console.log('Size: ', _.size(data.data[key].questions))
                 this.setState({
                     catQuestions: data.data[key],
-                    isLoading: false
+                    isLoading: false,
+                    totalQuestions: _.size(data.data[key].questions)
                 })
             })
             .catch(err => {
                 console.log('Error: ' + err)
             })
+    }
+
+    nextQuestion(){
+        const {currentQuestion, totalQuestions} = this.state
+        if(currentQuestion < totalQuestions-1){
+            this.setState({
+                currentQuestion: this.state.currentQuestion+1
+            })
+        }
+        else{
+            console.log('No more questions')
+        }
     }
 
     renderQuestions(question, key) {
@@ -85,12 +102,12 @@ class Questions extends Component {
         }
         
         return (   
-            <div>
+            <>
                 <Navbar />
                 <Grid textAlign='center' style={{margin: "10px"}}>
                     <Grid.Row>
                         <Grid.Column>
-                        <h1>Questions about {this.props.match.params.nameCat} <Icon name={this.state.catQuestions.icon} /></h1>
+                        <h1>Questions about {this.state.catQuestions.name} <Icon name={this.state.catQuestions.icon} /></h1>
                         <hr/>
                         </Grid.Column>
                     </Grid.Row>
@@ -98,9 +115,9 @@ class Questions extends Component {
                 {
                     this.state.catQuestions.questions &&
                     Object.keys(this.state.catQuestions.questions)
+                        // eslint-disable-next-line
                         .map(key => {
                             items.push(key)
-                            //return this.renderQuestions(this.state.catQuestions.questions[key], key)
                         })
                 }
                 {
@@ -109,9 +126,9 @@ class Questions extends Component {
                 }
                 <Progress value={this.state.currentQuestion + 1} total={items.length} progress='ratio' color={'orange'}/>
                 <Grid textAlign='center' style={{margin: "20px"}}>
-                    <Button>Response</Button>
+                    <Button onClick={this.nextQuestion}>Next</Button>
                 </Grid>
-            </div>
+            </>
         )
     }
 }
