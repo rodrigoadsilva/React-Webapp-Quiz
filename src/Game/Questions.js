@@ -13,10 +13,12 @@ class Questions extends Component {
             catQuestions: {},
             isLoading: false,
             currentQuestion: 0,
-            totalQuestions: 0
+            totalQuestions: 0,
+            answers: {}
         }
 
         this.nextQuestion = this.nextQuestion.bind(this)
+        this.onRadioChange = this.onRadioChange.bind(this)
     }
 
     componentDidMount() {
@@ -57,9 +59,15 @@ class Questions extends Component {
         }
     }
 
-    renderQuestions(question, key) {
+    onRadioChange = (e, {answer, name, alternative}) => {
+        this.setState({answers: answer})
+        console.log('Yor answer is', answer)
+        console.log(this.state.catQuestions.questions[name].alternatives[alternative].correct)
+    }
+
+    renderQuestions(question, id) {
         return (
-            <Grid container columns={2} textAlign='center' key={key}>
+            <Grid container columns={2} textAlign='center' key={id}>
                 <Grid.Row>
                     <h3>Question: {question.title}.</h3>
                 </Grid.Row>
@@ -67,25 +75,40 @@ class Questions extends Component {
                     <Grid.Column style={{paddingBottom: "5px"}}>
                         <Message color='yellow'>
                             <p>1- {question.alternatives[1].answer}</p>
-                            <Radio toggle />
+                            <Radio
+                                toggle
+                                name={id}
+                                alternative={1}
+                                answer={question.alternatives[1].answer}
+                                onChange={this.onRadioChange}
+                            />
                         </Message>
                     </Grid.Column>
                     <Grid.Column style={{paddingBottom: "5px"}}>
                         <Message color='teal'>
                             <p>2- {question.alternatives[2].answer}</p>
-                            <Radio toggle />
+                            <Radio
+                                toggle
+                                name={id}
+                            />
                         </Message>
                     </Grid.Column>
                     <Grid.Column>
                         <Message color='pink'>
                             <p>3- {question.alternatives[3].answer}</p>
-                            <Radio toggle />
+                            <Radio
+                                toggle
+                                name={id}
+                            />
                         </Message>
                     </Grid.Column>
                     <Grid.Column>
                         <Message color='brown'>
                             <p>4- {question.alternatives[4].answer}</p>
-                            <Radio toggle />
+                            <Radio
+                                toggle
+                                name={id}
+                            />
                         </Message>
                     </Grid.Column>
                 </Grid.Row>
@@ -122,7 +145,7 @@ class Questions extends Component {
                 }
                 {
                     this.state.catQuestions.questions &&
-                    this.renderQuestions(this.state.catQuestions.questions[items[this.state.currentQuestion]], items[0])
+                    this.renderQuestions(this.state.catQuestions.questions[items[this.state.currentQuestion]], items[this.state.currentQuestion])
                 }
                 <Progress value={this.state.currentQuestion + 1} total={items.length} progress='ratio' color={'orange'}/>
                 <Grid textAlign='center' style={{margin: "20px"}}>
