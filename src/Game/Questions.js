@@ -57,6 +57,7 @@ class Questions extends Component {
         }
         else{
             console.log('No more questions')
+            console.log('Your points: ', this.state.playerPoints)
         }
     }
 
@@ -64,8 +65,7 @@ class Questions extends Component {
         this.setState({answers: answer})
         const playerAnswer = answer
         const correctAnswer = _.filter(this.state.catQuestions.questions[name].alternatives, {'correct': true})[0].answer
-        const isRight = (playerAnswer === correctAnswer)
-        if(isRight){
+        if(playerAnswer === correctAnswer){
             this.setState({playerPoints: this.state.playerPoints+10})
         }
     }
@@ -159,7 +159,15 @@ class Questions extends Component {
                 }
                 <Progress value={this.state.currentQuestion + 1} total={items.length} progress='ratio' color={'orange'}/>
                 <Grid textAlign='center' style={{margin: "20px"}}>
-                    <Button onClick={this.nextQuestion}>Next</Button>
+                    {
+                        this.state.currentQuestion === this.state.totalQuestions-1 &&
+                        <Button onClick={this.nextQuestion}>Finish</Button>    
+                    }
+                    {
+                        this.state.currentQuestion < this.state.totalQuestions-1 &&
+                        <Button onClick={this.nextQuestion}>Next</Button>
+                    }
+                    
                 </Grid>
             </>
         )
