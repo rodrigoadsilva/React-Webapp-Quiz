@@ -14,7 +14,8 @@ class Questions extends Component {
             isLoading: false,
             currentQuestion: 0,
             totalQuestions: 0,
-            answers: {}
+            answers: {},
+            playerPoints: 0
         }
 
         this.nextQuestion = this.nextQuestion.bind(this)
@@ -59,10 +60,14 @@ class Questions extends Component {
         }
     }
 
-    onRadioChange = (e, {answer, name, alternative}) => {
+    onRadioChange = (e, {answer, name,}) => {
         this.setState({answers: answer})
-        console.log('Yor answer is', answer)
-        console.log(this.state.catQuestions.questions[name].alternatives[alternative].correct)
+        const playerAnswer = answer
+        const correctAnswer = _.filter(this.state.catQuestions.questions[name].alternatives, {'correct': true})[0].answer
+        const isRight = (playerAnswer === correctAnswer)
+        if(isRight){
+            this.setState({playerPoints: this.state.playerPoints+10})
+        }
     }
 
     renderQuestions(question, id) {
@@ -78,7 +83,6 @@ class Questions extends Component {
                             <Radio
                                 toggle
                                 name={id}
-                                alternative={1}
                                 answer={question.alternatives[1].answer}
                                 onChange={this.onRadioChange}
                             />
@@ -90,6 +94,8 @@ class Questions extends Component {
                             <Radio
                                 toggle
                                 name={id}
+                                answer={question.alternatives[2].answer}
+                                onChange={this.onRadioChange}
                             />
                         </Message>
                     </Grid.Column>
@@ -99,6 +105,8 @@ class Questions extends Component {
                             <Radio
                                 toggle
                                 name={id}
+                                answer={question.alternatives[3].answer}
+                                onChange={this.onRadioChange}
                             />
                         </Message>
                     </Grid.Column>
@@ -108,6 +116,8 @@ class Questions extends Component {
                             <Radio
                                 toggle
                                 name={id}
+                                answer={question.alternatives[4].answer}
+                                onChange={this.onRadioChange}
                             />
                         </Message>
                     </Grid.Column>
