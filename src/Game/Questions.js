@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Grid, Radio, Button, Message, Icon, Progress } from 'semantic-ui-react'
 import axios from 'axios'
 import _ from 'lodash'
@@ -16,10 +17,11 @@ class Questions extends Component {
             totalQuestions: 0,
             answers: {},
             playerPoints: 0,
-            playerAnswerResult: []
+            playerAnswerResult: [],
+            isFinished: false
         }
 
-        this.nextQuestion = this.nextQuestion.bind(this)
+        this.finishQuestions = this.finishQuestions.bind(this)
         this.onRadioChange = this.onRadioChange.bind(this)
     }
 
@@ -49,34 +51,32 @@ class Questions extends Component {
             })
     }
 
-    finishQuestions(){
+    finishQuestions() {
         console.log('No more questions')
         console.log('Your points: ', this.state.playerPoints)
+        this.setState({isFinished: true})
     }
 
-    onRadioChange = (e, {answer, name}) => {
-        this.setState({answers: answer})
+    onRadioChange = (e, { answer, name }) => {
+        this.setState({ answers: answer })
         const playerAnswer = answer
-        const correctAnswer = _.filter(this.state.catQuestions.questions[name].alternatives, {'correct': true})[0].answer
+        const correctAnswer = _.filter(this.state.catQuestions.questions[name].alternatives, { 'correct': true })[0].answer
         const isRight = (playerAnswer === correctAnswer)
         const playerResult = {
             question: this.state.catQuestions.questions[name].title,
             answer: answer,
             isRight: isRight
         }
-        this.setState({playerAnswerResult: [...this.state.playerAnswerResult, playerResult]})
-        if(isRight){
-            this.setState({playerPoints: this.state.playerPoints+10})
+        this.setState({ playerAnswerResult: [...this.state.playerAnswerResult, playerResult] })
+        if (isRight) {
+            this.setState({ playerPoints: this.state.playerPoints + 10 })
         }
-        const {currentQuestion, totalQuestions} = this.state
-        if(currentQuestion < totalQuestions){
+
+        const { currentQuestion, totalQuestions } = this.state
+        if (currentQuestion < totalQuestions) {
             this.setState({
-                currentQuestion: this.state.currentQuestion+1
+                currentQuestion: this.state.currentQuestion + 1
             })
-        }
-        else{
-            console.log('No more questions')
-            console.log('Your points: ', this.state.playerPoints)
         }
     }
 
@@ -85,15 +85,9 @@ class Questions extends Component {
             <Grid container columns={2} textAlign='center' key={id}>
                 <Grid.Row>
                     <h3>Question: {question.title}.</h3>
-                    <br/>
-                    {JSON.stringify(this.state.playerAnswerResult)}
-                    <br/>
-                    {JSON.stringify(this.state.currentQuestion)}
-                    <br/>
-                    {JSON.stringify(this.state.totalQuestions)}
                 </Grid.Row>
                 <Grid.Row columns={2}>
-                    <Grid.Column style={{paddingBottom: "5px"}}>
+                    <Grid.Column style={{ paddingBottom: "5px" }}>
                         <Message color='yellow'>
                             <p>1- {question.alternatives[1].answer}</p>
                             <Radio
@@ -104,7 +98,7 @@ class Questions extends Component {
                             />
                         </Message>
                     </Grid.Column>
-                    <Grid.Column style={{paddingBottom: "5px"}}>
+                    <Grid.Column style={{ paddingBottom: "5px" }}>
                         <Message color='teal'>
                             <p>2- {question.alternatives[2].answer}</p>
                             <Radio
@@ -146,18 +140,22 @@ class Questions extends Component {
 
         let items = []
 
-        if(this.state.isLoading){
+        if (this.state.isLoading) {
             return <h2>Loading questions...</h2>
         }
-        
-        return (   
+
+        /*if(isFinished){
+            return <Redirect to='/result'/>
+        }*/
+
+        return (
             <>
                 <Navbar />
-                <Grid textAlign='center' style={{margin: "10px"}}>
+                <Grid textAlign='center' style={{ margin: "10px" }}>
                     <Grid.Row>
                         <Grid.Column>
-                        <h1>Questions about {this.state.catQuestions.name} <Icon name={this.state.catQuestions.icon} /></h1>
-                        <hr/>
+                            <h1>Questions about {this.state.catQuestions.name} <Icon name={this.state.catQuestions.icon} /></h1>
+                            <hr />
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
@@ -174,14 +172,20 @@ class Questions extends Component {
                     this.state.currentQuestion < this.state.totalQuestions &&
                     this.renderQuestions(this.state.catQuestions.questions[items[this.state.currentQuestion]], items[this.state.currentQuestion])
                 }
-                <Progress value={this.state.currentQuestion} total={items.length} progress='ratio' color={'orange'}/>
-                <Grid textAlign='center' style={{margin: "20px"}}>
-                    
+                <Progress value={this.state.currentQuestion} total={items.length} progress='ratio' color={'orange'} />
+                <Grid textAlign='center' style={{ margin: "20px" }}>
+
                     {
                         this.state.currentQuestion === this.state.totalQuestions &&
-                        <Button onClick={this.finishQuestions}>Finish</Button>    
-                    }                    
+                        <Button onClick={this.finishQuestions}>Finish</Button>
+                    }
                 </Grid>
+                <br />
+                {JSON.stringify(this.state.playerAnswerResult)}
+                <br />
+                {JSON.stringify(this.state.currentQuestion)}
+                <br />
+                {JSON.stringify(this.state.totalQuestions)}
             </>
         )
     }
