@@ -15,7 +15,8 @@ class Questions extends Component {
             currentQuestion: 0,
             totalQuestions: 0,
             answers: {},
-            playerPoints: 0
+            playerPoints: 0,
+            playerAnswerResult: []
         }
 
         this.nextQuestion = this.nextQuestion.bind(this)
@@ -48,9 +49,27 @@ class Questions extends Component {
             })
     }
 
-    nextQuestion(){
+    finishQuestions(){
+        console.log('No more questions')
+        console.log('Your points: ', this.state.playerPoints)
+    }
+
+    onRadioChange = (e, {answer, name}) => {
+        this.setState({answers: answer})
+        const playerAnswer = answer
+        const correctAnswer = _.filter(this.state.catQuestions.questions[name].alternatives, {'correct': true})[0].answer
+        const isRight = (playerAnswer === correctAnswer)
+        const playerResult = {
+            question: this.state.catQuestions.questions[name].title,
+            answer: answer,
+            isRight: isRight
+        }
+        this.setState({playerAnswerResult: [...this.state.playerAnswerResult, playerResult]})
+        if(isRight){
+            this.setState({playerPoints: this.state.playerPoints+10})
+        }
         const {currentQuestion, totalQuestions} = this.state
-        if(currentQuestion < totalQuestions-1){
+        if(currentQuestion < totalQuestions){
             this.setState({
                 currentQuestion: this.state.currentQuestion+1
             })
@@ -61,20 +80,17 @@ class Questions extends Component {
         }
     }
 
-    onRadioChange = (e, {answer, name,}) => {
-        this.setState({answers: answer})
-        const playerAnswer = answer
-        const correctAnswer = _.filter(this.state.catQuestions.questions[name].alternatives, {'correct': true})[0].answer
-        if(playerAnswer === correctAnswer){
-            this.setState({playerPoints: this.state.playerPoints+10})
-        }
-    }
-
     renderQuestions(question, id) {
         return (
             <Grid container columns={2} textAlign='center' key={id}>
                 <Grid.Row>
                     <h3>Question: {question.title}.</h3>
+                    <br/>
+                    {JSON.stringify(this.state.playerAnswerResult)}
+                    <br/>
+                    {JSON.stringify(this.state.currentQuestion)}
+                    <br/>
+                    {JSON.stringify(this.state.totalQuestions)}
                 </Grid.Row>
                 <Grid.Row columns={2}>
                     <Grid.Column style={{paddingBottom: "5px"}}>
@@ -155,19 +171,16 @@ class Questions extends Component {
                 }
                 {
                     this.state.catQuestions.questions &&
+                    this.state.currentQuestion < this.state.totalQuestions &&
                     this.renderQuestions(this.state.catQuestions.questions[items[this.state.currentQuestion]], items[this.state.currentQuestion])
                 }
-                <Progress value={this.state.currentQuestion + 1} total={items.length} progress='ratio' color={'orange'}/>
+                <Progress value={this.state.currentQuestion} total={items.length} progress='ratio' color={'orange'}/>
                 <Grid textAlign='center' style={{margin: "20px"}}>
-                    {
-                        this.state.currentQuestion === this.state.totalQuestions-1 &&
-                        <Button onClick={this.nextQuestion}>Finish</Button>    
-                    }
-                    {
-                        this.state.currentQuestion < this.state.totalQuestions-1 &&
-                        <Button onClick={this.nextQuestion}>Next</Button>
-                    }
                     
+                    {
+                        this.state.currentQuestion === this.state.totalQuestions &&
+                        <Button onClick={this.finishQuestions}>Finish</Button>    
+                    }                    
                 </Grid>
             </>
         )
