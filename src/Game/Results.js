@@ -34,6 +34,9 @@ class Result extends Component {
                 <Navbar/>
                 <h2>Final result</h2>
                 <p>Following is your final result of the questions answered in the chosen category</p>
+                <br/>
+                {JSON.stringify(this.props.location.state)}
+                <br/>
                 <Container>
                     <List divided>
                         <ResultQuestion answer={question[0]}/>

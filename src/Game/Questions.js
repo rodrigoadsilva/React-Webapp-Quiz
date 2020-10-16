@@ -15,7 +15,6 @@ class Questions extends Component {
             isLoading: false,
             currentQuestion: 0,
             totalQuestions: 0,
-            answers: {},
             playerPoints: 0,
             playerAnswerResult: [],
             isFinished: false
@@ -58,7 +57,6 @@ class Questions extends Component {
     }
 
     onRadioChange = (e, { answer, name }) => {
-        this.setState({ answers: answer })
         const playerAnswer = answer
         const correctAnswer = _.filter(this.state.catQuestions.questions[name].alternatives, { 'correct': true })[0].answer
         const isRight = (playerAnswer === correctAnswer)
@@ -144,9 +142,19 @@ class Questions extends Component {
             return <h2>Loading questions...</h2>
         }
 
-        /*if(isFinished){
-            return <Redirect to='/result'/>
-        }*/
+        if(this.state.isFinished){
+            return(
+                <Redirect
+                    to={{
+                        pathname: '/result',
+                        state: {
+                            playerResult: this.state.playerAnswerResult,
+                            playerPoints: this.state.playerPoints
+                        }
+                    }}
+                />
+            )
+        }
 
         return (
             <>
