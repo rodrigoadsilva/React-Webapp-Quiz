@@ -4,45 +4,30 @@ import {List, Container} from 'semantic-ui-react'
 import Navbar from './Navbar'
 import ResultQuestion from './ResultQuestion'
 
-const question = [
-    {
-        id: '1',
-        title: 'FooBla',
-        response: '3'
-    },
-    {
-        id: '2',
-        title: 'BeeBla',
-        response: '1'
-    },
-    {
-        id: '3',
-        title: 'TaaBla',
-        response: '3'
-    },
-    {
-        id: '4',
-        title: 'FiiBla',
-        response: '4'
-    }
-]
-
 class Result extends Component {
     render(){
+        const {playerResult} = this.props.location.state
         return(
             <div>
                 <Navbar/>
-                <h2>Final result</h2>
-                <p>Following is your final result of the questions answered in the chosen category</p>
-                <br/>
-                {JSON.stringify(this.props.location.state)}
-                <br/>
+                    <h2>Final result</h2>
+                    <p>Following is your final result of the questions answered in the chosen category</p>
                 <Container>
                     <List divided>
-                        <ResultQuestion answer={question[0]}/>
-                        <ResultQuestion answer={question[1]}/>
-                        <ResultQuestion answer={question[2]}/>
-                        <ResultQuestion answer={question[3]}/>
+                        {   
+                            Object.keys(playerResult)
+                                .map(key =>{
+                                    console.log()
+                                    const color = (playerResult[key].isRight ? 'green' : 'red')
+                                    return <ResultQuestion
+                                                idQuestion={parseInt(key)+1}
+                                                question={playerResult[key].question}
+                                                answer={playerResult[key].answer}
+                                                colorResult={color}
+                                                key={key}
+                                            />
+                                })
+                        }
                     </List>
                 </Container>
             </div>
