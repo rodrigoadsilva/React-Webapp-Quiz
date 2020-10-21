@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Menu, Image, Dropdown } from 'semantic-ui-react'
 import firebase from 'firebase'
 
-import {auth} from './../config'
+import { auth } from './../config'
 
 class Navbar extends Component {
     constructor(props) {
@@ -19,12 +19,11 @@ class Navbar extends Component {
     }
 
     componentDidMount() {
-
         auth.onAuthStateChanged((user) => {
-            if(user){
+            if (user) {
                 const userCurrent = firebase.auth().currentUser
                 console.log(userCurrent)
-                
+
                 if (userCurrent !== null) {
                     const userLogged = {
                         name: userCurrent.displayName,
@@ -36,7 +35,7 @@ class Navbar extends Component {
                     })
                 }
             }
-            else{
+            else {
                 console.log('User dont logged')
                 this.setState({
                     isLogged: false

@@ -180,20 +180,14 @@ class Questions extends Component {
                     this.state.currentQuestion < this.state.totalQuestions &&
                     this.renderQuestions(this.state.catQuestions.questions[items[this.state.currentQuestion]], items[this.state.currentQuestion])
                 }
-                <Progress value={this.state.currentQuestion} total={items.length} progress='ratio' color={'orange'} />
-                <Grid textAlign='center' style={{ margin: "20px" }}>
+                <Grid textAlign='center' style={{ margin: "50px" }}>
 
                     {
                         this.state.currentQuestion === this.state.totalQuestions &&
-                        <Button onClick={this.finishQuestions}>Finish</Button>
+                        <Button size='huge' color='green' onClick={this.finishQuestions}>Finish</Button>
                     }
                 </Grid>
-                <br />
-                {JSON.stringify(this.state.playerAnswerResult)}
-                <br />
-                {JSON.stringify(this.state.currentQuestion)}
-                <br />
-                {JSON.stringify(this.state.totalQuestions)}
+                <Progress value={this.state.currentQuestion} total={items.length} progress='ratio' color={'orange'} />
             </>
         )
     }
